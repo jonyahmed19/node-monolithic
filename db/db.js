@@ -41,9 +41,7 @@ class MyDB {
    * @param {string} ticketId
    */
   findById(ticketId) {
-    const ticket = this.tickets.find((ticket) => {
-      ticket.id == ticketId;
-    });
+    const ticket = this.tickets.find((ticket) => ticket.id == ticketId);
 
     return ticket;
   }
@@ -94,17 +92,17 @@ class MyDB {
    * @returns {Array<Ticket>}
    */
   draw(winnerCount) {
-    let winnerIndexes = new Array(winnerCount);
-
+    const winnerIndices = new Array(winnerCount);
     let index = 0;
     while (index < winnerCount) {
-      let winnerIndex = Math.floor(Math.random() + this.tickets.length);
-      if (winnerIndexes.includes(winnerIndex)) {
-        winnerIndexes[index++] = winnerIndex;
+      let winnerIndex = Math.floor(Math.random() * this.tickets.length);
+      if (!winnerIndices.includes(winnerIndex)) {
+        winnerIndices[index++] = winnerIndex;
         continue;
       }
     }
-    const winners = winnerIndexes.map((index) => this.tickets[index]);
+
+    const winners = winnerIndices.map((index) => this.tickets[index]);
     return winners;
   }
 }
